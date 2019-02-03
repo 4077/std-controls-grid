@@ -1,0 +1,65 @@
+// head {
+@__nodeId__: ~"std_controls_grid__main";
+// }
+
+.@{__nodeId__} {
+
+    .hoverable() {
+        cursor: pointer;
+
+        &.hover {
+            background-color: #FAFAFA;
+        }
+    }
+
+    .padding() {
+
+        .cell_content {
+            padding: 10px;
+        }
+    }
+
+    .select() {
+
+        .cell_content {
+            padding: 7px 10px;
+        }
+    }
+
+    .txtControlContainer() {
+
+        input {
+            background-color: #FFFAE5;
+            box-shadow: 1px 1px 0px rgba(0, 0, 0, 0.3) inset;
+        }
+
+        .txt {
+            padding: 10px;
+        }
+    }
+
+    //
+    //
+    //
+
+    td.cell {
+        position: relative;
+        background-color: #EEEEEE;
+
+        &.hoverable {
+            .hoverable;
+        }
+
+        &.padding {
+            .padding;
+        }
+
+        &.select {
+            .select;
+        }
+
+        &.txt {
+            .txtControlContainer;
+        }
+    }
+}
