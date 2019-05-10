@@ -30,40 +30,36 @@ class Main extends \Controller
 
     private function getFields()
     {
-        $columns = handlers()->render($this->data('handlers/fields'));
+        $fields = handlers()->render($this->data('handlers/fields'));
 
         $output = [];
 
-        foreach ($columns as $columnId => $column) {
-            $output[$columnId] = $this->fixControl($column);
+        foreach ($fields as $fieldId => $field) {
+            $output[$fieldId] = $this->fixControl($field);
         }
 
         return $output;
     }
 
-    private function fixControl($column)
+    private function fixControl($field)
     {
-        if (!empty($column['control'])) {
-            $control = &$column['control'];
+        if (!empty($field['control'])) {
+            $fieldControl = &$field['control'];
 
             $controlsData = $this->getControlsData();
 
-            if ($controlCall = ap($controlsData, $control[0])) {
-                $control[0] = $controlCall['path'];
+            if ($controlCall = ap($controlsData, $fieldControl[0])) {
+                $controlPath = $controlCall['path'];
+                $controlData = $controlCall['data'] ?? [];
 
-                $controlData = $control[1] ?? [];
+                ra($controlData, $fieldControl[1] ?? []);
 
-                ra($controlData, $controlCall['data'] ?? []);
-
-                $control[1] = [
-                    'model' => '%model',
-                    'field' => '%column_id',
-                    'data'  => $controlData
-                ];
+                $fieldControl[0] = $controlPath;
+                $fieldControl[1] = $controlData;
             }
         }
 
-        return $column;
+        return $field;
     }
 
     private $controlsData;
